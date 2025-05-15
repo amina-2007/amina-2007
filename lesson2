@@ -1,0 +1,98 @@
+using System;
+
+namespace GeniyIdiotConsoleApp
+{
+    class Program
+    {
+        // Универсальный метод для получения вопросов
+        static string[] GetQuestions(int countQuestions)
+        {
+            string[] questions = new string[countQuestions];
+            questions[0] = "Сколько будет два плюс два умноженное на два?";
+            questions[1] = "Бревно нужно распилить на 10 частей. Сколько распилов нужно сделать?";
+            questions[2] = "На двух руках 10 пальцев. Сколько пальцев на 5 руках?";
+            questions[3] = "Укол делают каждые полчаса. Сколько нужно минут, чтобы сделать три укола?";
+            questions[4] = "Пять свечей горело, две потухли. Сколько свечей осталось?";
+            // Пример добавления дополнительных вопросов
+            questions[5] = "Сколько будет 10 минус 5?";
+            questions[6] = "Если на дереве сидит 3 вороны, сколько воронам всего надо лететь?";
+            questions[7] = "Сколько дней в феврале в високосный год?";
+            questions[8] = "Какое число идет после 99?";
+            questions[9] = "Сколько будет 3 умножить на 5?";
+            return questions;
+        }
+
+        // Универсальный метод для получения правильных ответов
+        static int[] GetAnswers(int countQuestions)
+        {
+            int[] answers = new int[countQuestions];
+            answers[0] = 6;
+            answers[1] = 9;
+            answers[2] = 25;
+            answers[3] = 60;
+            answers[4] = 2;
+            // Пример добавления дополнительных правильных ответов
+            answers[5] = 5;
+            answers[6] = 3;
+            answers[7] = 29;
+            answers[8] = 100;
+            answers[9] = 15;
+            return answers;
+        }
+
+        // Метод для вычисления диагноза
+        static string GetDiagnosis(int countQuestions, int countRightAnswers)
+        {
+            double percentage = (double)countRightAnswers / countQuestions * 100;
+
+            if (percentage >= 96)
+                return "гений";
+            else if (percentage >= 81)
+                return "талант";
+            else if (percentage >= 61)
+                return "нормальный";
+            else if (percentage >= 41)
+                return "дурак";
+            else if (percentage >= 21)
+                return "идиот";
+            else
+                return "кретин";
+        }
+
+        static void Main(string[] args)
+        {
+            // Получаем вопросы и ответы
+            int countQuestions = 10;  // Можно изменять количество вопросов
+            string[] questions = GetQuestions(countQuestions);
+            int[] answers = GetAnswers(countQuestions);
+
+            int countRightAnswers = 0;
+
+            Random random = new Random();
+
+            // Инициализация вопросов
+            for (int i = 0; i < countQuestions; i++)
+            {
+                Console.WriteLine("Вопрос №" + (i + 1));
+
+                int randomQuestionIndex = random.Next(0, countQuestions);
+                Console.WriteLine(questions[randomQuestionIndex]);
+
+                int userAnswer = Convert.ToInt32(Console.ReadLine());
+
+                int rightAnswer = answers[randomQuestionIndex];
+
+                if (userAnswer == rightAnswer)
+                {
+                    countRightAnswers++;
+                }
+            }
+
+            Console.WriteLine("Количество правильных ответов: " + countRightAnswers);
+
+            // Вычисляем диагноз в зависимости от процентного соотношения правильных ответов
+            string diagnosis = GetDiagnosis(countQuestions, countRightAnswers);
+            Console.WriteLine("Ваш диагноз: " + diagnosis);
+        }
+    }
+}
